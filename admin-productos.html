@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — LOPEZCELL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/shared.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div class="container">
+  <h1>Admin — LOPEZCELL</h1>
+  <p class="subtitle">Gestiona productos, stock y más</p>
+
+  <div id="msg" class="msg"></div>
+
+  <div class="card">
+    <h2><i class="ti ti-plus"></i> Nuevo producto</h2>
+    <form id="productForm" onsubmit="saveProduct(event)">
+      <input type="hidden" id="editId" value="" />
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre del producto</label>
+          <input type="text" id="nombre" required placeholder="Ej: iPhone 15 Pro Max" />
+        </div>
+        <div class="form-group">
+          <label>Precio (COP)</label>
+          <input type="number" id="precio" required placeholder="2199900" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Stock (cantidad)</label>
+          <input type="number" id="stock" value="5" min="0" required />
+        </div>
+        <div class="form-group">
+          <label>Categoría</label>
+          <select id="categoria">
+            <option value="celulares-nuevos">Celulares Nuevos</option>
+            <option value="celulares-remanufacturados">Celulares Re.</option>
+            <option value="pantallas">Pantallas</option>
+            <option value="baterias">Baterías</option>
+            <option value="accesorios">Accesorios</option>
+            <option value="cargadores">Cargadores</option>
+            <option value="fundas">Fundas</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Marca</label>
+          <select id="marca">
+            <option value="">Seleccionar...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Compatibilidad</label>
+          <input type="text" id="compat" placeholder="Ej: iPhone 15 Pro Max" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Badge</label>
+          <select id="badge">
+            <option value="">Ninguno</option>
+            <option value="stock">En stock</option>
+            <option value="nuevo">Nuevo</option>
+            <option value="oferta">Oferta</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Precio anterior (solo para ofertas)</label>
+          <input type="number" id="old_precio" placeholder="Ej: 1499900" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Imagen</label>
+        <div class="img-upload-area">
+          <input type="file" id="fileInput" accept="image/*" onchange="handleFileSelect(event)" />
+          <button type="button" class="img-upload-btn" onclick="document.getElementById('fileInput').click()">
+            <i class="ti ti-upload"></i> Subir imagen
+          </button>
+          <span id="fileName" style="font-size:12px;color:var(--muted);"></span>
+          <span style="color:var(--muted);font-size:12px;">o</span>
+          <input type="url" id="imagen" placeholder="https://..." style="flex:1;min-width:120px;" />
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button type="submit" class="btn-submit" id="submitBtn" style="flex:1;"><i class="ti ti-device-floppy"></i> Guardar producto</button>
+        <button type="button" class="btn-submit" id="cancelBtn" style="flex:0;background:var(--muted);display:none;" onclick="cancelEdit()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-package"></i> Productos <span id="productCount" style="font-size:13px;font-weight:400;color:var(--muted)"></span></h2>
+
+    <div class="filter-bar">
+      <div class="search-wrap">
+        <i class="ti ti-search"></i>
+        <input type="text" placeholder="Buscar producto..." id="searchInput" oninput="applyFilters()" />
+      </div>
+      <select id="catFilter" onchange="applyFilters()" style="border:1px solid var(--border);border-radius:var(--radius-sm);padding:0 10px;height:36px;font-size:13px;font-family:'Poppins',sans-serif;">
+        <option value="">Todas las categorías</option>
+        <option value="celulares-nuevos">Celulares Nuevos</option>
+        <option value="celulares-remanufacturados">Celulares Re.</option>
+        <option value="pantallas">Pantallas</option>
+        <option value="baterias">Baterías</option>
+        <option value="accesorios">Accesorios</option>
+        <option value="cargadores">Cargadores</option>
+        <option value="fundas">Fundas</option>
+      </select>
+    </div>
+
+    <div class="filter-tabs" id="catTabs">
+      <div class="filter-tab active" data-cat="" onclick="setAdminCat('')">Todos</div>
+      <div class="filter-tab" data-cat="celulares-nuevos" onclick="setAdminCat('celulares-nuevos')">Celulares Nuevos</div>
+      <div class="filter-tab" data-cat="celulares-remanufacturados" onclick="setAdminCat('celulares-remanufacturados')">Celulares Re.</div>
+      <div class="filter-tab" data-cat="pantallas" onclick="setAdminCat('pantallas')">Pantallas</div>
+      <div class="filter-tab" data-cat="baterias" onclick="setAdminCat('baterias')">Baterías</div>
+      <div class="filter-tab" data-cat="accesorios" onclick="setAdminCat('accesorios')">Accesorios</div>
+      <div class="filter-tab" data-cat="cargadores" onclick="setAdminCat('cargadores')">Cargadores</div>
+      <div class="filter-tab" data-cat="fundas" onclick="setAdminCat('fundas')">Fundas</div>
+    </div>
+
+    <div id="productList" class="product-list">
+      <div class="loading"><i class="ti ti-loader"></i> Cargando...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://ecfqzjtoafiweykrksic.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjZnF6anRvYWZpd2V5a3Jrc2ljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxNzE4OTgsImV4cCI6MjA5NTc0Nzg5OH0.Q4dP-a8VpB3lKVJ8K5ErAhT-drOQ_q2oKffixu4nNOo';
+const { createClient } = supabase;
+const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let ALL_PRODUCTS = [];
+let selectedFile = null;
+let adminCat = '';
+
+function showMsg(text, type) {
+  const el = document.getElementById('msg');
+  el.textContent = text; el.className = 'msg ' + type;
+  setTimeout(() => { el.className = 'msg'; }, 4000);
+}
+
+function setAdminCat(cat) {
+  adminCat = cat;
+  document.querySelectorAll('#catTabs .filter-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
+  document.getElementById('catFilter').value = cat;
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const cat = document.getElementById('catFilter').value;
+  let list = ALL_PRODUCTS;
+  if (cat) list = list.filter(p => p.categoria === cat);
+  if (q) list = list.filter(p => p.nombre.toLowerCase().includes(q));
+
+  const div = document.getElementById('productList');
+  document.getElementById('productCount').textContent = '(' + ALL_PRODUCTS.length + ' · ' + list.length + ' filtrados)';
+  if (!list.length) { div.innerHTML = '<div class="empty">No se encontraron productos</div>'; return; }
+  div.innerHTML = list.map(p => {
+    const stockClass = p.stock <= 0 ? 'stock-zero' : p.stock <= 3 ? 'stock-low' : 'stock-ok';
+    const stockLabel = p.stock <= 0 ? 'Sin stock' : p.stock + ' uds';
+    const catLabel = { 'celulares-nuevos':'Cel.Nuevos','celulares-remanufacturados':'Cel.Re.','pantallas':'Pantallas','baterias':'Baterías','accesorios':'Accs.','cargadores':'Carg.','fundas':'Fundas' } [p.categoria] || p.categoria;
+    const oldHtml = p.old_precio ? '<div class="old">$' + Number(p.old_precio).toLocaleString('es-CO') + '</div>' : '';
+    const badgeHtml = p.badge ? '<span style="margin-left:4px;font-size:10px;font-weight:700;color:' + (p.badge==='oferta'?'var(--accent)':p.badge==='nuevo'?'var(--blue)':'var(--green)') + '">[' + p.badge.toUpperCase() + ']</span>' : '';
+    return '<div class="product-row">' +
+      '<div class="thumb"><img src="' + p.imagen + '" alt="" onerror="this.src=\'data:image/svg+xml,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'48\\\' height=\\\'48\\\'><rect fill=\\\'%23E2E8F3\\\' width=\\\'48\\\' height=\\\'48\\\'/><text x=\\\'50%\\\' y=\\\'50%\\\' text-anchor=\\\'middle\\\' dy=\\\'.3em\\\' fill=\\\'%236B7280\\\' font-size=\\\'10\\\'>IMG</text></svg>\'" /></div>' +
+      '<div class="info"><div class="name">' + p.nombre + badgeHtml + '</div><div class="meta">' + catLabel + (p.marca ? ' · ' + p.marca : '') + (p.compat ? ' · ' + p.compat : '') + '</div></div>' +
+      '<div class="stock-badge ' + stockClass + '">' + stockLabel + '</div>' +
+      '<div class="price-info"><div class="current">$' + Number(p.precio).toLocaleString('es-CO') + '</div>' + oldHtml + '</div>' +
+      '<div class="actions"><button class="btn-icon edit" onclick="editProduct(' + p.id + ')" title="Editar"><i class="ti ti-pencil"></i></button><button class="btn-icon" onclick="deleteProduct(' + p.id + ')" title="Eliminar"><i class="ti ti-trash"></i></button></div>' +
+      '</div>';
+  }).join('');
+}
+
+async function loadProducts() {
+  const div = document.getElementById('productList');
+  div.innerHTML = '<div class="loading"><i class="ti ti-loader"></i> Cargando...</div>';
+  const { data, error } = await _supabase.from('productos').select('*').order('id', { ascending: false });
+  if (error) { div.innerHTML = '<div class="empty">Error al cargar</div>'; return; }
+  ALL_PRODUCTS = data || [];
+  applyFilters();
+}
+
+async function loadMarcas() {
+  const sel = document.getElementById('marca');
+  const { data } = await _supabase.from('marcas').select('nombre').order('nombre');
+  if (data) sel.innerHTML = '<option value="">Seleccionar...</option>' + data.map(m => '<option value="' + m.nombre + '">' + m.nombre + '</option>').join('');
+}
+
+async function uploadFile(file) {
+  const ext = file.name.split('.').pop();
+  const path = Date.now() + '_' + Math.random().toString(36).slice(2,8) + '.' + ext;
+  const { data, error } = await _supabase.storage.from('productos').upload(path, file, { cacheControl: '3600', upsert: false });
+  if (error) throw error;
+  const { data: { publicUrl } } = _supabase.storage.from('productos').getPublicUrl(path);
+  return publicUrl;
+}
+
+function handleFileSelect(e) {
+  selectedFile = e.target.files[0];
+  document.getElementById('fileName').textContent = selectedFile ? selectedFile.name : '';
+}
+
+function cancelEdit() {
+  document.getElementById('editId').value = '';
+  document.getElementById('productForm').reset();
+  document.getElementById('stock').value = 5;
+  document.getElementById('cancelBtn').style.display = 'none';
+  document.getElementById('submitBtn').innerHTML = '<i class="ti ti-device-floppy"></i> Guardar producto';
+  selectedFile = null;
+  document.getElementById('fileName').textContent = '';
+  document.getElementById('fileInput').value = '';
+  document.getElementById('imagen').value = '';
+}
+
+function editProduct(id) {
+  const p = ALL_PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('editId').value = id;
+  document.getElementById('nombre').value = p.nombre;
+  document.getElementById('precio').value = p.precio;
+  document.getElementById('stock').value = p.stock;
+  document.getElementById('categoria').value = p.categoria;
+  document.getElementById('marca').value = p.marca || '';
+  document.getElementById('compat').value = p.compat || '';
+  document.getElementById('badge').value = p.badge || '';
+  document.getElementById('old_precio').value = p.old_precio || '';
+  document.getElementById('imagen').value = p.imagen || '';
+  document.getElementById('cancelBtn').style.display = 'block';
+  document.getElementById('submitBtn').innerHTML = '<i class="ti ti-refresh"></i> Actualizar producto';
+  document.getElementById('productForm').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function saveProduct(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const editId = document.getElementById('editId').value;
+  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader"></i> ' + (editId ? 'Actualizando...' : 'Guardando...');
+
+  let imagen = document.getElementById('imagen').value.trim();
+  if (selectedFile) {
+    try { imagen = await uploadFile(selectedFile); }
+    catch (err) { showMsg('Error al subir imagen: ' + err.message, 'error'); btn.disabled = false; btn.innerHTML = editId ? '<i class="ti ti-refresh"></i> Actualizar producto' : '<i class="ti ti-device-floppy"></i> Guardar producto'; return; }
+  }
+  if (!imagen) { showMsg('Debes ingresar una URL o subir una imagen', 'error'); btn.disabled = false; btn.innerHTML = editId ? '<i class="ti ti-refresh"></i> Actualizar producto' : '<i class="ti ti-device-floppy"></i> Guardar producto'; return; }
+
+  const payload = {
+    nombre: document.getElementById('nombre').value.trim(),
+    precio: parseInt(document.getElementById('precio').value),
+    stock: parseInt(document.getElementById('stock').value) || 0,
+    imagen: imagen,
+    categoria: document.getElementById('categoria').value,
+    marca: document.getElementById('marca').value,
+    compat: document.getElementById('compat').value.trim(),
+    badge: document.getElementById('badge').value || null,
+    old_precio: document.getElementById('old_precio').value ? parseInt(document.getElementById('old_precio').value) : null
+  };
+
+  let error;
+  if (editId) {
+    ({ error } = await _supabase.from('productos').update(payload).eq('id', editId));
+  } else {
+    ({ error } = await _supabase.from('productos').insert(payload));
+  }
+
+  if (error) { showMsg('Error: ' + error.message, 'error'); btn.disabled = false; btn.innerHTML = editId ? '<i class="ti ti-refresh"></i> Actualizar producto' : '<i class="ti ti-device-floppy"></i> Guardar producto'; return; }
+  showMsg(editId ? 'Producto actualizado ✓' : 'Producto creado ✓', 'success');
+  cancelEdit();
+  btn.disabled = false;
+  loadProducts();
+}
+
+async function deleteProduct(id) {
+  if (!confirm('¿Eliminar este producto?')) return;
+  const { error } = await _supabase.from('productos').delete().eq('id', id);
+  if (error) { showMsg('Error: ' + error.message, 'error'); return; }
+  showMsg('Producto eliminado ✓', 'success');
+  loadProducts();
+}
+
+loadMarcas();
+loadProducts();
+</script>
+</body>
+</html>

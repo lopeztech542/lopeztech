@@ -1,0 +1,21 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue: #1A6FD4;
+  --blue-dark: #0C447C;
+  --text: #1C2340;
+  --muted: #6B7280;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; background: #F0F7FF;
+  color: var(--text); text-align: center; padding: 2rem;
+}
+.msg h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.msg p { font-size: 14px; color: var(--muted); margin-bottom: 1.5rem; }
+.msg a {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--blue); color: #fff; padding: 10px 24px;
+  border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 14px;
+}
+.msg a:hover { background: var(--blue-dark); }
