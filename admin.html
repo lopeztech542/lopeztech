@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — LOPEZCELL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div class="admin-header">
+  <div class="admin-header-inner">
+    <h1>LOPEZ<span>CELL</span> · ADMIN</h1>
+    <a href="lopezcell-inicio.html" class="back-link">← Volver al sitio</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" data-tab="dashboard" onclick="switchTab('dashboard')"><i class="ti ti-dashboard"></i> Dashboard</div>
+    <div class="tab" data-tab="clients" onclick="switchTab('clients')"><i class="ti ti-users"></i> Clientes</div>
+    <div class="tab" data-tab="products" onclick="switchTab('products')"><i class="ti ti-package"></i> Productos</div>
+    <div class="tab" data-tab="sales" onclick="switchTab('sales')"><i class="ti ti-shopping-cart"></i> Ventas</div>
+  </div>
+
+  <!-- ─── TAB: Dashboard ─── -->
+  <div class="tab-content active" id="tab-dashboard">
+    <div class="stats-grid" id="stats">
+      <div class="stat-card"><div class="num" id="statClients">0</div><div class="label">Clientes</div></div>
+      <div class="stat-card"><div class="num" id="statProducts">0</div><div class="label">Productos</div></div>
+      <div class="stat-card"><div class="num" id="statSalesToday">0</div><div class="label">Ventas Hoy</div></div>
+      <div class="stat-card"><div class="num money" id="statIncome">$0</div><div class="label">Ingresos Totales</div></div>
+      <div class="stat-card"><div class="num" id="statLowStock">0</div><div class="label">Stock Bajo</div></div>
+    </div>
+
+    <div class="card">
+      <h2><i class="ti ti-trending-up"></i> Resumen Rápido</h2>
+      <div id="recentSales"></div>
+    </div>
+  </div>
+
+  <!-- ─── TAB: Clientes ─── -->
+  <div class="tab-content" id="tab-clients">
+    <div class="card">
+      <h2><i class="ti ti-user-plus"></i> Agregar Cliente</h2>
+      <div class="form-row">
+        <input type="text" id="clientName" placeholder="Nombre completo" required>
+        <input type="tel" id="clientPhone" placeholder="Teléfono (ej: 3001234567)" required>
+        <input type="email" id="clientEmail" placeholder="Email (opcional)">
+      </div>
+      <button class="btn btn-primary" onclick="addClient()"><i class="ti ti-plus"></i> Agregar Cliente</button>
+    </div>
+
+    <div class="card">
+      <h2><i class="ti ti-users"></i> Clientes</h2>
+      <div class="search-bar">
+        <i class="ti ti-search"></i>
+        <input type="text" id="clientSearch" placeholder="Buscar por nombre o teléfono..." oninput="renderClients()">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Teléfono</th>
+              <th>Email</th>
+              <th>Registrado</th>
+              <th style="width:100px;">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="clientsTableBody"></tbody>
+        </table>
+      </div>
+      <p class="empty-msg" id="noClients">No hay clientes registrados aún.</p>
+    </div>
+  </div>
+
+  <!-- ─── TAB: Productos ─── -->
+  <div class="tab-content" id="tab-products">
+    <div class="card">
+      <h2 id="prodCardTitle"><i class="ti ti-plus"></i> Nuevo Producto</h2>
+      <form id="productForm" onsubmit="saveProduct(event)">
+        <input type="hidden" id="editProductId">
+        <div class="form-row">
+          <input type="text" id="prodName" placeholder="Nombre del producto" required>
+          <input type="number" id="prodPrice" placeholder="Precio (COP)" required>
+        </div>
+        <div class="form-row">
+          <input type="number" id="prodStock" placeholder="Stock" min="0" value="5">
+          <input type="text" id="prodCompat" placeholder="Compatibilidad (ej: iPhone 15)">
+        </div>
+        <div class="form-row">
+          <select id="prodCategory">
+            <option value="celulares-nuevos">Celulares Nuevos</option>
+            <option value="celulares-remanufacturados">Celulares Re.</option>
+            <option value="pantallas">Pantallas</option>
+            <option value="baterias">Baterías</option>
+            <option value="accesorios">Accesorios</option>
+            <option value="cargadores">Cargadores</option>
+            <option value="fundas">Fundas</option>
+          </select>
+          <select id="prodBadge">
+            <option value="">Sin badge</option>
+            <option value="nuevo">Nuevo</option>
+            <option value="oferta">Oferta</option>
+          </select>
+        </div>
+        <div class="img-upload-area">
+          <input type="file" id="fileInput" accept="image/*" onchange="handleFileSelect(event)">
+          <button type="button" class="img-upload-btn" onclick="document.getElementById('fileInput').click()"><i class="ti ti-upload"></i> Subir imagen</button>
+          <span id="fileName" style="font-size:12px;color:var(--muted);"></span>
+          <span style="color:var(--muted);font-size:12px;">o</span>
+          <input type="url" id="prodImage" placeholder="https://..." style="flex:1;min-width:120px;">
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="submitBtn"><i class="ti ti-device-floppy"></i> Guardar Producto</button>
+          <button type="button" class="btn btn-outline hidden" id="cancelBtn" onclick="cancelEdit()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2><i class="ti ti-package"></i> Productos <span id="productCount" style="font-weight:400;color:var(--muted);font-size:13px;"></span></h2>
+      <div class="search-bar">
+        <i class="ti ti-search"></i>
+        <input type="text" id="prodSearch" placeholder="Buscar producto..." oninput="renderProducts()">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:50px;"></th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th style="width:100px;">Precio</th>
+              <th style="width:70px;">Stock</th>
+              <th style="width:100px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody"></tbody>
+        </table>
+      </div>
+      <p class="empty-msg" id="noProducts">No hay productos.</p>
+    </div>
+  </div>
+
+  <!-- ─── TAB: Ventas ─── -->
+  <div class="tab-content" id="tab-sales">
+    <div class="card">
+      <div class="sales-header">
+        <h2><i class="ti ti-shopping-cart"></i> Ventas</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <select id="salesPeriod" onchange="loadSales()">
+            <option value="today">Hoy</option>
+            <option value="week">Esta Semana</option>
+            <option value="month" selected>Este Mes</option>
+            <option value="all">Todo</option>
+          </select>
+          <button class="btn btn-primary" onclick="openPOS()"><i class="ti ti-plus"></i> Nueva Venta</button>
+        </div>
+      </div>
+      <div class="stats-grid" style="margin-bottom:20px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));">
+        <div class="stat-card"><div class="num" id="salesCount">0</div><div class="label">Ventas</div></div>
+        <div class="stat-card"><div class="num money" id="salesIncome">$0</div><div class="label">Ingresos</div></div>
+        <div class="stat-card"><div class="num" id="salesItems">0</div><div class="label">Productos Vend.</div></div>
+        <div class="stat-card"><div class="num money" id="salesAvg">$0</div><div class="label">Promedio x Venta</div></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Fecha</th>
+              <th>Cliente</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th style="width:90px;">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="salesTableBody"></tbody>
+        </table>
+      </div>
+      <p class="empty-msg" id="noSales">No hay ventas.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- POS Modal -->
+<div class="modal-overlay" id="posModal" onclick="if(event.target===this)closePOS()">
+  <div class="pos-modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2><i class="ti ti-shopping-cart"></i> Nueva Venta</h2>
+      <button class="modal-close" onclick="closePOS()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="pos-grid">
+      <div class="pos-products">
+        <input type="text" id="posSearch" placeholder="Buscar producto..." oninput="renderPOSProducts()">
+        <div id="posProductList"></div>
+      </div>
+      <div class="pos-cart">
+        <h3>Carrito</h3>
+        <div id="posCartItems"></div>
+        <div class="pos-customer">
+          <input type="text" id="posName" placeholder="Nombre del cliente">
+          <input type="tel" id="posPhone" placeholder="Teléfono (opcional)">
+        </div>
+        <div class="pos-total">
+          <span>Total</span>
+          <span id="posTotalAmount">$0</span>
+        </div>
+        <button class="btn btn-primary" onclick="completeSale()" style="width:100%;"><i class="ti ti-device-floppy"></i> Completar Venta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Invoice Modal -->
+<div class="modal-overlay" id="invoiceModal" onclick="if(event.target===this)closeInvoice()">
+  <div class="invoice-modal" onclick="event.stopPropagation()">
+    <div class="modal-header no-print">
+      <h2><i class="ti ti-file-invoice"></i> Factura</h2>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-primary btn-sm" onclick="printInvoice()"><i class="ti ti-printer"></i> Imprimir</button>
+        <button class="modal-close" onclick="closeInvoice()"><i class="ti ti-x"></i></button>
+      </div>
+    </div>
+    <div class="invoice" id="invoiceContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/admin.js"></script>
+
+</body>
+</html>
