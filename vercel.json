@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/lopezcell-inicio.html" }
+  ],
+  "cleanUrls": false,
+  "trailingSlash": false
+}
