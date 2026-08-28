@@ -1,5 +1,5 @@
-const SUPABASE_URL = 'https://ecfqzjtoafiweykrksic.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjZnF6anRvYWZpd2V5a3Jrc2ljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxNzE4OTgsImV4cCI6MjA5NTc0Nzg5OH0.Q4dP-a8VpB3lKVJ8K5ErAhT-drOQ_q2oKffixu4nNOo';
+const SUPABASE_URL = 'https://nrnrrbjzbbqbdcamsqap.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ybnJyYmp6YmJxYmRjYW1zcWFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMTMzOTcsImV4cCI6MjEwMDY4OTM5N30.OFZTYrPALSs4yJ_9q-S2DbTu7On4HxxSjf0Nt4dXwbs';
 const { createClient } = supabase;
 const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -151,12 +151,16 @@ function handleFileSelect(e){
 }
 
 async function uploadFile(file){
-  var ext = file.name.split('.').pop();
-  var path = Date.now() + '_' + Math.random().toString(36).slice(2,8) + '.' + ext;
-  var { error } = await _supabase.storage.from('productos').upload(path, file, { cacheControl: '3600', upsert: false });
-  if(error) throw error;
-  var { data: { publicUrl } } = _supabase.storage.from('productos').getPublicUrl(path);
-  return publicUrl;
+  var formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', 'lopeztech_preset');
+  var res = await fetch('https://api.cloudinary.com/v1_1/ylee0qlx/image/upload', {
+    method: 'POST',
+    body: formData
+  });
+  if(!res.ok) throw new Error('Error al subir a Cloudinary');
+  var data = await res.json();
+  return data.secure_url;
 }
 
 function cancelEdit(){
@@ -181,7 +185,15 @@ function editProduct(id){
   document.getElementById('prodStock').value = p.stock;
   document.getElementById('prodCategory').value = p.categoria || '';
   document.getElementById('prodCompat').value = p.compat || '';
+  document.getElementById('prodMarca').value = p.marca || '';
+  document.getElementById('prodModelo').value = p.modelo || '';
   document.getElementById('prodBadge').value = p.badge || '';
+  document.getElementById('prodDestacado').checked = p.destacado === true;
+  document.getElementById('prodDetalles').value = p.detalles || '';
+  document.getElementById('prodInfo').value = p.informacion || '';
+  document.getElementById('prodCaract').value = p.caracteristicas || '';
+  document.getElementById('prodGarantia').value = p.garantia || '';
+  document.getElementById('prodCaja').value = p.contenido_caja || '';
   document.getElementById('prodImage').value = p.imagen || '';
   document.getElementById('cancelBtn').classList.remove('hidden');
   document.getElementById('submitBtn').innerHTML = '<i class="ti ti-refresh"></i> Actualizar Producto';
@@ -197,8 +209,16 @@ async function saveProduct(e){
   var stock = parseInt(document.getElementById('prodStock').value) || 0;
   var categoria = document.getElementById('prodCategory').value;
   var compat = document.getElementById('prodCompat').value.trim();
+  var marca = document.getElementById('prodMarca').value.trim();
+  var modelo = document.getElementById('prodModelo').value.trim();
   var badge = document.getElementById('prodBadge').value || null;
+  var detalles = document.getElementById('prodDetalles').value.trim();
+  var informacion = document.getElementById('prodInfo').value.trim();
+  var caracteristicas = document.getElementById('prodCaract').value.trim();
+  var garantia = document.getElementById('prodGarantia').value.trim();
+  var contenido_caja = document.getElementById('prodCaja').value.trim();
   var imagen = document.getElementById('prodImage').value.trim();
+  var destacado = document.getElementById('prodDestacado').checked;
 
   if(selectedFile){
     try { imagen = await uploadFile(selectedFile); }
@@ -206,7 +226,7 @@ async function saveProduct(e){
   }
   if(!imagen){ showToast('Debes ingresar una URL o subir una imagen', 'error'); return; }
 
-  var payload = { nombre: nombre, precio: precio, stock: stock, imagen: imagen, categoria: categoria, compat: compat, badge: badge };
+  var payload = { nombre: nombre, precio: precio, stock: stock, imagen: imagen, categoria: categoria, compat: compat, marca: marca, modelo: modelo, badge: badge, detalles: detalles, informacion: informacion, caracteristicas: caracteristicas, garantia: garantia, contenido_caja: contenido_caja, destacado: destacado };
   var error;
   if(editId){
     var r = await _supabase.from('productos').update(payload).eq('id', editId);

@@ -29,7 +29,7 @@ function sendForm(nombre, apellido, celular, marca, modelo, problema, modalForm)
   texto += '%0AMarca: ' + encodeURIComponent(marca);
   if (modelo) texto += '%0AModelo: ' + encodeURIComponent(modelo);
   if (problema) texto += '%0AProblema: ' + encodeURIComponent(problema);
-  window.open('https://wa.me/573235538178?text=' + texto, '_blank');
+  window.open('https://wa.me/573215151950?text=' + texto, '_blank');
 
   if (modalForm) closeDiagModal();
 }
@@ -65,21 +65,4 @@ document.getElementById('diagModalForm').addEventListener('submit', function(e){
 // Close modal on overlay click
 document.getElementById('diagModal')?.addEventListener('click', function(e){
   if(e.target === this) closeDiagModal();
-});
-
-// Hide WA float when footer enters viewport
-window.addEventListener('scroll', function(){
-  var wa = document.querySelector('.wa-float');
-  if(!wa) return;
-  var footer = document.querySelector('footer');
-  if(!footer) return;
-  var rect = footer.getBoundingClientRect();
-  var windowHeight = window.innerHeight;
-  if(rect.top < windowHeight + 50){
-    wa.style.opacity = '0';
-    wa.style.pointerEvents = 'none';
-  } else {
-    wa.style.opacity = '1';
-    wa.style.pointerEvents = 'auto';
-  }
 });

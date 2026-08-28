@@ -89,19 +89,4 @@
 })();
 
 
-// Hide WA float when footer is visible
-window.addEventListener('scroll', function(){
-  var wa = document.querySelector('.wa-float');
-  if(!wa) return;
-  var footer = document.querySelector('footer');
-  if(!footer) return;
-  var rect = footer.getBoundingClientRect();
-  var windowHeight = window.innerHeight;
-  if(rect.top < windowHeight + 50) {
-    wa.style.opacity = '0';
-    wa.style.pointerEvents = 'none';
-  } else {
-    wa.style.opacity = '1';
-    wa.style.pointerEvents = 'auto';
-  }
-});
+

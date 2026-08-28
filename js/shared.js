@@ -11,3 +11,22 @@ function closeMobileMenu(){
   if(btn) btn.className = 'ti ti-menu-2';
 }
 document.getElementById('mobileOverlay')?.addEventListener('click', closeMobileMenu);
+
+// Hide WA & IG float when footer is visible
+window.addEventListener('scroll', function(){
+  var wa = document.querySelector('.wa-float');
+  var ig = document.querySelector('.ig-float');
+  var footer = document.querySelector('footer');
+  if(!footer) return;
+  var rect = footer.getBoundingClientRect();
+  var windowHeight = window.innerHeight;
+  var hide = rect.top < windowHeight + 50;
+  if(wa) {
+    wa.style.opacity = hide ? '0' : '1';
+    wa.style.pointerEvents = hide ? 'none' : 'auto';
+  }
+  if(ig) {
+    ig.style.opacity = hide ? '0' : '1';
+    ig.style.pointerEvents = hide ? 'none' : 'auto';
+  }
+});

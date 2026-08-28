@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin — LOPEZCELL</title>
+  <title>Admin — LOPEZTECH</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,8 +14,8 @@
 
 <div class="admin-header">
   <div class="admin-header-inner">
-    <h1>LOPEZ<span>CELL</span> · ADMIN</h1>
-    <a href="lopezcell-inicio.html" class="back-link">← Volver al sitio</a>
+    <h1>LOPEZ<span>TECH</span> · ADMIN</h1>
+    <a href="lopeztech-inicio.html" class="back-link">← Volver al sitio</a>
   </div>
 </div>
 
@@ -94,17 +94,21 @@
         </div>
         <div class="form-row">
           <input type="number" id="prodStock" placeholder="Stock" min="0" value="5">
-          <input type="text" id="prodCompat" placeholder="Compatibilidad (ej: iPhone 15)">
+          <input type="text" id="prodCompat" placeholder="Compatibilidad (ej: HP Pavilion 15)">
+        </div>
+        <div class="form-row">
+          <input type="text" id="prodMarca" placeholder="Marca (ej: HP, Dell, Lenovo)">
+          <input type="text" id="prodModelo" placeholder="Modelo">
         </div>
         <div class="form-row">
           <select id="prodCategory">
-            <option value="celulares-nuevos">Celulares Nuevos</option>
-            <option value="celulares-remanufacturados">Celulares Re.</option>
+            <option value="celulares-nuevos">Computadores Nuevos</option>
+            <option value="celulares-remanufacturados">Computadores Re.</option>
             <option value="pantallas">Pantallas</option>
             <option value="baterias">Baterías</option>
             <option value="accesorios">Accesorios</option>
-            <option value="cargadores">Cargadores</option>
-            <option value="fundas">Fundas</option>
+            <option value="cargadores">Fuentes de Poder</option>
+            <option value="fundas">Mochilas</option>
           </select>
           <select id="prodBadge">
             <option value="">Sin badge</option>
@@ -112,6 +116,20 @@
             <option value="oferta">Oferta</option>
           </select>
         </div>
+        <div class="form-row" style="align-items:center;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);cursor:pointer;">
+            <input type="checkbox" id="prodDestacado" style="width:16px;height:16px;cursor:pointer;"> Destacado en Inicio
+          </label>
+        </div>
+        <div class="form-row">
+          <textarea id="prodDetalles" placeholder="Detalles del producto" rows="2" style="border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;font-family:'Poppins',sans-serif;color:var(--text);resize:vertical;width:100%;"></textarea>
+          <textarea id="prodInfo" placeholder="Información adicional" rows="2" style="border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;font-family:'Poppins',sans-serif;color:var(--text);resize:vertical;width:100%;"></textarea>
+        </div>
+        <div class="form-row">
+          <textarea id="prodCaract" placeholder="Características técnicas (una por línea)" rows="2" style="border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;font-family:'Poppins',sans-serif;color:var(--text);resize:vertical;width:100%;"></textarea>
+          <textarea id="prodGarantia" placeholder="Información de garantía" rows="2" style="border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;font-family:'Poppins',sans-serif;color:var(--text);resize:vertical;width:100%;"></textarea>
+        </div>
+        <textarea id="prodCaja" placeholder="Contenido de la caja (una línea por ítem)" rows="2" style="width:100%;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;font-family:'Poppins',sans-serif;color:var(--text);resize:vertical;margin-bottom:12px;"></textarea>
         <div class="img-upload-area">
           <input type="file" id="fileInput" accept="image/*" onchange="handleFileSelect(event)">
           <button type="button" class="img-upload-btn" onclick="document.getElementById('fileInput').click()"><i class="ti ti-upload"></i> Subir imagen</button>

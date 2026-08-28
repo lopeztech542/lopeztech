@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/lopezcell-inicio.html" }
+    { "source": "/", "destination": "/lopeztech-inicio.html" }
   ],
   "cleanUrls": false,
   "trailingSlash": false

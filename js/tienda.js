@@ -1,5 +1,5 @@
-const SUPABASE_URL = 'https://ecfqzjtoafiweykrksic.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjZnF6anRvYWZpd2V5a3Jrc2ljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxNzE4OTgsImV4cCI6MjA5NTc0Nzg5OH0.Q4dP-a8VpB3lKVJ8K5ErAhT-drOQ_q2oKffixu4nNOo';
+const SUPABASE_URL = 'https://nrnrrbjzbbqbdcamsqap.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ybnJyYmp6YmJxYmRjYW1zcWFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxMTMzOTcsImV4cCI6MjEwMDY4OTM5N30.OFZTYrPALSs4yJ_9q-S2DbTu7On4HxxSjf0Nt4dXwbs';
 const { createClient } = supabase;
 const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -15,13 +15,13 @@ function fmt(n) {
 
 function catLabel(cat) {
   const map = {
-    'celulares-nuevos': 'Celulares Nuevos',
-    'celulares-remanufacturados': 'Celulares Re.',
+    'celulares-nuevos': 'Computadores Nuevos',
+    'celulares-remanufacturados': 'Computadores Re.',
     'pantallas': 'Pantallas',
     'baterias': 'Baterías',
     'accesorios': 'Accesorios',
-    'cargadores': 'Cargadores',
-    'fundas': 'Fundas'
+    'cargadores': 'Fuentes de Poder',
+    'fundas': 'Mochilas'
   };
   return map[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
 }
@@ -66,7 +66,7 @@ function renderProducts(list) {
             <button class="add-btn" onclick="addToCart(${p.id},'${p.nombre.replace(/'/g,"\\'")}',${p.precio},'${p.imagen}')" ${p.stock <= 0 ? 'disabled' : ''} style="${p.stock <= 0 ? 'opacity:0.4;cursor:not-allowed;' : ''}">
               <i class="ti ti-shopping-cart" style="font-size:14px"></i> Carrito
             </button>
-            <a href="https://wa.me/573235538178?text=${waMsg}" target="_blank" class="buy-now-btn" ${p.stock <= 0 ? 'style="opacity:0.4;pointer-events:none;"' : ''}>
+            <a href="https://wa.me/573215151950?text=${waMsg}" target="_blank" class="buy-now-btn" ${p.stock <= 0 ? 'style="opacity:0.4;pointer-events:none;"' : ''}>
               <i class="ti ti-bolt" style="font-size:14px"></i> Comprar
             </a>
           </div>
@@ -140,28 +140,7 @@ function updateCartUI() {
 }
 
 function showDetail(id) {
-  const p = PRODUCTS.find(x => x.id === id);
-  if (!p) return;
-  const overlay = document.getElementById('detailModal');
-  document.getElementById('detailTitle').innerHTML = '<i class="ti ti-info-circle" style="color:var(--blue)"></i> ' + p.nombre;
-  document.getElementById('detailContent').innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:1rem;">
-      <img src="${p.imagen}" alt="${p.nombre}" style="width:100%;height:200px;object-fit:contain;border-radius:var(--radius-md);background:var(--sky);padding:12px;" />
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:14px;">
-        <div><strong style="color:var(--text);">Precio</strong><br><span style="color:var(--blue);font-weight:700;font-size:18px;">${fmt(p.precio)}</span>${p.old_precio ? '<br><span style="text-decoration:line-through;color:var(--muted);font-size:12px;">' + fmt(p.old_precio) + '</span>' : ''}</div>
-        <div><strong style="color:var(--text);">Stock</strong><br><span style="color:${p.stock > 0 ? 'var(--green)' : 'var(--red)'};font-weight:600;">${p.stock > 0 ? '✓ ' + p.stock + ' disponibles' : '✗ Agotado'}</span></div>
-        <div><strong style="color:var(--text);">Marca</strong><br><span>${p.marca || 'Genérica'}</span></div>
-        <div><strong style="color:var(--text);">Categoría</strong><br><span>${catLabel(p.categoria)}</span></div>
-        <div style="grid-column:1/-1;"><strong style="color:var(--text);">Compatibilidad</strong><br><span>${p.compat || 'Universal'}</span></div>
-        ${p.badge ? '<div style="grid-column:1/-1;"><strong style="color:var(--text);">Etiqueta</strong><br><span style="display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:700;background:' + (p.badge==='oferta'?'var(--accent)':p.badge==='nuevo'?'var(--blue)':'var(--green-bg)') + ';color:' + (p.badge==='stock'?'var(--green)':'#fff') + ';">' + p.badge.toUpperCase() + '</span></div>' : ''}
-      </div>
-      <div style="display:flex;gap:8px;min-width:0;">
-        <button class="add-btn" onclick="addToCart(${p.id},'${p.nombre.replace(/'/g,"\\'")}',${p.precio},'${p.imagen}');closeDetail();" style="flex:1;min-width:0;"><i class="ti ti-shopping-cart" style="font-size:14px"></i> Agregar al carrito</button>
-        <a href="https://wa.me/573235538178?text=${encodeURIComponent('Hola, quiero comprar: ' + p.nombre + ' por ' + fmt(p.precio))}" target="_blank" class="buy-now-btn" style="flex:1;min-width:0;"><i class="ti ti-bolt" style="font-size:14px"></i> Comprar</a>
-      </div>
-    </div>
-  `;
-  overlay.classList.add('open');
+  window.location.href = 'producto-detalle.html?id=' + id;
 }
 
 function closeDetail() {
@@ -200,7 +179,7 @@ function openCart() {
   document.getElementById('cartTotal').textContent = fmt(cartTotal);
 
   const msg = encodeURIComponent('Hola, quiero comprar:\n' + cart.map(p => '• ' + p.name + ' x' + p.qty + ' = ' + fmt(p.price * p.qty)).join('\n') + '\n\nTotal: ' + fmt(cartTotal));
-  document.getElementById('cartWaBtn').href = 'https://wa.me/573235538178?text=' + msg;
+  document.getElementById('cartWaBtn').href = 'https://wa.me/573215151950?text=' + msg;
 
   footer.style.display = 'block';
   overlay.classList.add('open');

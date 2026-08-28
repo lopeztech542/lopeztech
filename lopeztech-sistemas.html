@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistemas — LOPEZTECH · Santa Marta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/shared.css" />
+  <link rel="stylesheet" href="css/sistemas.css" />
+</head>
+<body>
+
+<nav>
+  <a href="lopeztech-inicio.html" class="logo"><img src="img/LOGO.png" alt="LOPEZTECH" style="height:50px;display:block" /></a>
+  <div class="nav-links">
+    <a href="lopeztech-inicio.html">Inicio</a>
+    <a href="lopeztech-servicios.html">Servicios</a>
+    <a href="lopeztech-tienda.html">Tienda</a>
+    <a href="lopeztech-sistemas.html" class="active">Sistemas</a>
+    <a href="lopeztech-inicio.html#contacto">Contacto</a>
+  </div>
+  <a href="lopeztech-diagnostico.html" class="nav-btn"><i class="ti ti-tool"></i> Diagnóstico gratis</a>
+  <button class="nav-menu" aria-label="Menú"><i class="ti ti-menu-2"></i></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <div class="mobile-panel">
+    <button class="mobile-close" onclick="closeMobileMenu()" aria-label="Cerrar menú"><i class="ti ti-x"></i></button>
+    <div class="mobile-links">
+      <a href="lopeztech-inicio.html">Inicio</a>
+      <a href="lopeztech-servicios.html">Servicios</a>
+      <a href="lopeztech-tienda.html">Tienda</a>
+      <a href="lopeztech-sistemas.html" class="active">Sistemas</a>
+      <a href="lopeztech-inicio.html#contacto">Contacto</a>
+    </div>
+    <a href="lopeztech-diagnostico.html" class="mobile-cta"><i class="ti ti-tool"></i> Diagnóstico gratis</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="sis-hero">
+  <canvas id="tech-canvas"></canvas>
+  <div class="sis-hero-text">
+    <div class="sis-badge"><i class="ti ti-code" style="font-size:13px"></i> Desarrollo a medida</div>
+    <h1>Sistemas de<br>software<br><em>a tu medida</em></h1>
+    <p>Desarrollamos soluciones de software personalizadas para empresas, microempresas, locales y necesidades personales. Adaptamos cada sistema a tu negocio.</p>
+    <div class="sis-hero-actions">
+      <a href="https://wa.me/573215151950?text=Hola,%20quiero%20información%20sobre%20sistemas%20de%20software%20a%20medida" class="sis-btn-primary"><i class="ti ti-brand-whatsapp"></i> Cotizar ahora</a>
+      <a href="#servicios" class="sis-btn-secondary"><i class="ti ti-arrow-down"></i> Ver servicios</a>
+    </div>
+  </div>
+  <div class="sis-hero-visual">
+    <div class="sis-shapes">
+      <div class="sis-shape sis-shape-1"><i class="ti ti-device-desktop"></i></div>
+      <div class="sis-shape sis-shape-2"><i class="ti ti-cloud"></i></div>
+      <div class="sis-shape sis-shape-3"><i class="ti ti-database"></i></div>
+      <div class="sis-shape sis-shape-4"><i class="ti ti-report-analytics"></i></div>
+      <div class="sis-shape sis-shape-5"><i class="ti ti-settings"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPOS DE NEGOCIO -->
+<section class="sis-biz-section">
+  <div class="sis-container">
+    <div class="sis-section-header">
+      <div class="section-tag">Para todos</div>
+      <h2>Soluciones para cada tipo de negocio</h2>
+      <p>Desde emprendimientos personales hasta empresas consolidadas, diseñamos el sistema que tu negocio necesita.</p>
+    </div>
+    <div class="sis-biz-layout">
+      <div class="sis-biz-img">
+        <img src="img/Sistemas1.png" alt="Sistemas de software" />
+      </div>
+      <div class="sis-biz-grid">
+        <div class="sis-biz-card">
+          <div class="sis-biz-icon"><i class="ti ti-building-store"></i></div>
+          <h3>Negocios locales</h3>
+          <p>Tiendas, restaurantes, cafeterías, ferreterías. Sistema de inventario, ventas y control de caja adaptado a tu local.</p>
+        </div>
+        <div class="sis-biz-card">
+          <div class="sis-biz-icon"><i class="ti ti-building"></i></div>
+          <h3>Microempresas</h3>
+          <p>Gestión de clientes, facturación, reportes y control de empleados. Todo integrado en una sola plataforma.</p>
+        </div>
+        <div class="sis-biz-card">
+          <div class="sis-biz-icon"><i class="ti ti-briefcase"></i></div>
+          <h3>Empresas</h3>
+          <p>Sistemas ERP, CRM, logística, recursos humanos. Soluciones escalables para empresas en crecimiento.</p>
+        </div>
+        <div class="sis-biz-card">
+          <div class="sis-biz-icon"><i class="ti ti-user"></i></div>
+          <h3>Uso personal</h3>
+          <p>Control de gastos, agendas, organizadores, portafolios. Software diseñado para tu día a día.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="sis-section sis-bg" id="servicios">
+  <div class="sis-container">
+    <div class="sis-section-header">
+      <div class="section-tag">Servicios</div>
+      <h2>¿Qué podemos desarrollar?</h2>
+      <p>Soluciones completas con tecnología moderna, soporte continuo y actualizaciones.</p>
+    </div>
+    <div class="sis-services-grid">
+      <div class="sis-svc-card">
+        <div class="sis-svc-icon" style="background:linear-gradient(135deg,#1A6FD4,#3B8BEA);"><i class="ti ti-desktop"></i></div>
+        <h3>Sistemas de gestión</h3>
+        <p>Inventario, punto de venta (POS), facturación electrónica, control de caja y reportes automáticos para tu negocio.</p>
+      </div>
+      <div class="sis-svc-card">
+        <div class="sis-svc-icon" style="background:linear-gradient(135deg,#0F973D,#2DBB5A);"><i class="ti ti-users"></i></div>
+        <h3>CRM / Clientes</h3>
+        <p>Base de datos de clientes, seguimiento de ventas, historial de compras, campañas de marketing y fidelización.</p>
+      </div>
+      <div class="sis-svc-card">
+        <div class="sis-svc-icon" style="background:linear-gradient(135deg,#7C3AED,#A066F0);"><i class="ti ti-world"></i></div>
+        <h3>Páginas y sistemas web</h3>
+        <p>Sitios web, plataformas en línea, tiendas virtuales, portales de clientes y sistemas accesibles desde cualquier dispositivo.</p>
+      </div>
+      <div class="sis-svc-card">
+        <div class="sis-svc-icon" style="background:linear-gradient(135deg,#EA580C,#F78B46);"><i class="ti ti-chart-bar"></i></div>
+        <h3>Reportes y analytics</h3>
+        <p>Dashboards personalizados, reportes de ventas, gráficas de rendimiento, KPIs y métricas en tiempo real.</p>
+      </div>
+      <div class="sis-svc-card">
+        <div class="sis-svc-icon" style="background:linear-gradient(135deg,#DB2777,#F05A9A);"><i class="ti ti-device-mobile"></i></div>
+        <h3>Apps móviles</h3>
+        <p>Aplicaciones para Android y iOS: pedidos, delivery, reservas, lectura de códigos QR y más.</p>
+      </div>
+      <div class="sis-svc-card">
+        <div class="sis-svc-icon" style="background:linear-gradient(135deg,#0891B2,#22C8E8);"><i class="ti ti-cloud"></i></div>
+        <h3>Cloud y respaldos</h3>
+        <p>Migración a la nube, respaldos automáticos, acceso remoto seguro y sincronización entre dispositivos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section class="sis-section">
+  <div class="sis-container">
+    <div class="sis-section-header">
+      <div class="section-tag">Proceso</div>
+      <h2>Cómo trabajamos</h2>
+      <p>Un flujo claro y profesional para que tu sistema esté listo sin complicaciones.</p>
+    </div>
+    <div class="sis-steps">
+      <div class="sis-step">
+        <div class="sis-step-num">1</div>
+        <div class="sis-step-content">
+          <h3>Reunión inicial</h3>
+          <p>Escuchamos tus necesidades, analizamos tu negocio y definimos los objetivos del sistema.</p>
+        </div>
+      </div>
+      <div class="sis-step">
+        <div class="sis-step-num">2</div>
+        <div class="sis-step-content">
+          <h3>Diseño y propuesta</h3>
+          <p>Diseñamos la solución, te presentamos la propuesta técnica y el presupuesto antes de iniciar.</p>
+        </div>
+      </div>
+      <div class="sis-step">
+        <div class="sis-step-num">3</div>
+        <div class="sis-step-content">
+          <h3>Desarrollo</h3>
+          <p>Programamos tu sistema con tecnología moderna, realizamos pruebas y ajustes continuos.</p>
+        </div>
+      </div>
+      <div class="sis-step">
+        <div class="sis-step-num">4</div>
+        <div class="sis-step-content">
+          <h3>Entrega y soporte</h3>
+          <p>Capacitación, instalación, soporte técnico continuo y actualizaciones cuando las necesites.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VENTAJAS -->
+<section class="sis-section sis-bg">
+  <div class="sis-container">
+    <div class="sis-section-header">
+      <div class="section-tag">Ventajas</div>
+      <h2>¿Por qué elegirnos?</h2>
+    </div>
+    <div class="sis-advantages">
+      <div class="sis-adv">
+        <div class="sis-adv-icon"><i class="ti ti-paint"></i></div>
+        <h3>100% personalizado</h3>
+        <p>Nada de plantillas genéricas. Cada sistema se crea desde cero para tu negocio.</p>
+      </div>
+      <div class="sis-adv">
+        <div class="sis-adv-icon"><i class="ti ti-device-mobile"></i></div>
+        <h3>Accede desde cualquier lado</h3>
+        <p>Sistemas web y móviles. Gestiona tu negocio desde el celular, tablet o computador.</p>
+      </div>
+      <div class="sis-adv">
+        <div class="sis-adv-icon"><i class="ti ti-shield-check"></i></div>
+        <h3>Seguro y confiable</h3>
+        <p>Respaldos automáticos, encriptación de datos y servidores seguros.</p>
+      </div>
+      <div class="sis-adv">
+        <div class="sis-adv-icon"><i class="ti ti-clock"></i></div>
+        <h3>Soporte continuo</h3>
+        <p>Te acompañamos después de la entrega. Soporte técnico, actualizas y mejoras.</p>
+      </div>
+      <div class="sis-adv">
+        <div class="sis-adv-icon"><i class="ti ti-cash"></i></div>
+        <h3>Precios justos</h3>
+        <p>Presupuestos claros sin costos ocultos. Opciones de pago flexibles.</p>
+      </div>
+      <div class="sis-adv">
+        <div class="sis-adv-icon"><i class="ti ti-rocket"></i></div>
+        <h3>Entrega rápida</h3>
+        <p>Proyectos ágiles. Tu sistema listo en semanas, no meses.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sis-cta">
+  <div class="sis-container">
+    <h2>¿Tienes un proyecto en mente?</h2>
+    <p>Escríbenos y cuéntanos qué necesitas. Hacemos una cotización sin compromiso.</p>
+    <div class="sis-cta-actions">
+      <a href="https://wa.me/573215151950?text=Hola,%20quiero%20cotizar%20un%20sistema%20de%20software%20a%20medida" class="sis-btn-primary"><i class="ti ti-brand-whatsapp"></i> Cotizar por WhatsApp</a>
+      <a href="tel:573215151950" class="sis-btn-secondary"><i class="ti ti-phone"></i> Llamar ahora</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="logo">LOPEZ<span style="color:#FF6B35">TECH</span></div>
+    <p style="margin-top:5px; font-size:12px;">Santa Marta, Magdalena · Colombia</p>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-top:6px;">© 2025 LOPEZTECH · Todos los derechos reservados</p>
+</footer>
+
+<a href="https://wa.me/573215151950" class="wa-float" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="js/shared.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var canvas = document.getElementById('tech-canvas');
+  if (canvas && typeof drawTechCanvas === 'function') drawTechCanvas(canvas);
+});
+</script>
+
+</body>
+</html>

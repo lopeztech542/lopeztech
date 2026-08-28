@@ -133,6 +133,44 @@ footer p { font-size: 12px; }
 }
 .wa-float:hover { background: #1DA851; transform: scale(1.08); }
 
+/* ── INSTAGRAM FLOAT ── */
+.ig-float {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: #fff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(225,48,108,0.35);
+  text-decoration: none;
+  z-index: 200;
+  transition: transform 0.2s, opacity 0.3s;
+}
+.ig-float:hover { transform: scale(1.08); }
+
+/* ── FOOTER SOCIAL ── */
+.footer-social { display: flex; gap: 12px; margin-top: 10px; }
+.footer-social a {
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.footer-social a:hover { color: var(--blue); }
+
+/* ── CTA BUTTONS ── */
+.cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-instagram {
+  border: 1.5px solid #E1306C;
+}
+.btn-instagram:hover {
+  background: rgba(225,48,108,0.08);
+  border-color: #E1306C;
+}
+
 /* ── MOBILE SLIDE MENU ── */
 .mobile-menu { display: none; }
 .mobile-overlay {
@@ -177,7 +215,7 @@ footer p { font-size: 12px; }
   nav { height: 50px; padding: 0 0.8rem; }
   .nav-links, .nav-btn, .nav-right { display: none; }
   .nav-menu { display: block; }
-  .logo img { height: 80px !important; }
+  .logo img { height: 40px !important; }
   footer { padding: 1.5rem 1.2rem; flex-direction: column; text-align: center; }
   .footer-links { justify-content: center; }
   .mobile-menu { display: block; }
