@@ -140,7 +140,7 @@ function updateCartUI() {
 }
 
 function showDetail(id) {
-  window.location.href = 'producto-detalle.html?id=' + id;
+  window.location.href = '/producto?id=' + id;
 }
 
 function closeDetail() {

@@ -1,11 +1,17 @@
 {
-  "framework": null,
-  "buildCommand": "",
-  "outputDirectory": ".",
-  "installCommand": "",
   "cleanUrls": false,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/", "destination": "/lopeztech-inicio.html" }
+    { "source": "/", "destination": "/lopeztech-inicio.html" },
+    { "source": "/inicio", "destination": "/lopeztech-inicio.html" },
+    { "source": "/servicios", "destination": "/lopeztech-servicios.html" },
+    { "source": "/tienda", "destination": "/lopeztech-tienda.html" },
+    { "source": "/sistemas", "destination": "/lopeztech-sistemas.html" },
+    { "source": "/contacto", "destination": "/lopeztech-contacto.html" },
+    { "source": "/diagnostico", "destination": "/lopeztech-diagnostico.html" },
+    { "source": "/nfc", "destination": "/nfc.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/admin-productos", "destination": "/admin-productos.html" },
+    { "source": "/producto", "destination": "/producto-detalle.html" }
   ]
 }

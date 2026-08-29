@@ -69,21 +69,21 @@ function formatLines(text) {
     var waMsg = encodeURIComponent('Hola, quiero comprar: ' + p.nombre + ' por ' + fmt(p.precio));
 
     var navHTML = '<div class="detalle-nav">';
-    if (prevProduct) navHTML += '<a href="producto-detalle.html?id=' + prevProduct.id + '" class="nav-prev"><i class="ti ti-chevron-left"></i> ' + prevProduct.nombre.substring(0, 30) + '</a>';
+    if (prevProduct) navHTML += '<a href="producto?id=' + prevProduct.id + '" class="nav-prev"><i class="ti ti-chevron-left"></i> ' + prevProduct.nombre.substring(0, 30) + '</a>';
     else navHTML += '<span></span>';
-    if (nextProduct) navHTML += '<a href="producto-detalle.html?id=' + nextProduct.id + '" class="nav-next">' + nextProduct.nombre.substring(0, 30) + ' <i class="ti ti-chevron-right"></i></a>';
+    if (nextProduct) navHTML += '<a href="producto?id=' + nextProduct.id + '" class="nav-next">' + nextProduct.nombre.substring(0, 30) + ' <i class="ti ti-chevron-right"></i></a>';
     navHTML += '</div>';
 
     var navTopHTML = '<div class="detalle-nav-top">';
-    if (prevProduct) navTopHTML += '<a href="producto-detalle.html?id=' + prevProduct.id + '" class="nav-prev-sm"><i class="ti ti-chevron-left"></i></a>';
-    if (nextProduct) navTopHTML += '<a href="producto-detalle.html?id=' + nextProduct.id + '" class="nav-next-sm"><i class="ti ti-chevron-right"></i></a>';
+    if (prevProduct) navTopHTML += '<a href="producto?id=' + prevProduct.id + '" class="nav-prev-sm"><i class="ti ti-chevron-left"></i></a>';
+    if (nextProduct) navTopHTML += '<a href="producto?id=' + nextProduct.id + '" class="nav-next-sm"><i class="ti ti-chevron-right"></i></a>';
     navTopHTML += '</div>';
 
     document.getElementById('breadcrumbNav').style.display = 'none';
 
     page.innerHTML = `
       <div class="detalle-top-nav">
-        <a href="lopeztech-tienda.html" class="back-link"><i class="ti ti-arrow-left"></i> Volver a la tienda</a>
+        <a href="/tienda" class="back-link"><i class="ti ti-arrow-left"></i> Volver a la tienda</a>
         ${navTopHTML}
       </div>
       <div class="detalle-grid">
