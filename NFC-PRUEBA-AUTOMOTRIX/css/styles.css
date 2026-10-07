@@ -14,9 +14,7 @@
       min-height: 100vh;
       font-family: Inter, Arial, Helvetica, sans-serif;
       color: var(--white);
-      background:
-        url("../img/fondo.png") center / cover no-repeat fixed,
-        #050505;
+      background: #050505;
       display: flex;
       justify-content: center;
       padding: 28px 16px;
@@ -24,15 +22,7 @@
     }
 
     body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .10;
-      background-image:
-        linear-gradient(135deg, transparent 0 48%, rgba(255,255,255,.04) 49% 50%, transparent 51%),
-        linear-gradient(45deg, transparent 0 48%, rgba(255,0,20,.035) 49% 50%, transparent 51%);
-      background-size: 80px 80px;
+      content: none;
     }
 
     .app {
