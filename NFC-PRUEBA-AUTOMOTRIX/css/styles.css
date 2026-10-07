@@ -64,7 +64,7 @@
     }
 
     .tagline {
-      margin-top: 12px;
+      margin-top: 2px;
       color: var(--white);
       font-size: clamp(15px, 4vw, 18px);
       font-weight: 700;
