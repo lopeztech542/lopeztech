@@ -15,7 +15,7 @@
       font-family: Inter, Arial, Helvetica, sans-serif;
       color: var(--white);
       background:
-        url("img/fondo.png") center / cover no-repeat fixed,
+        url("../img/fondo.png") center / cover no-repeat fixed,
         #050505;
       display: flex;
       justify-content: center;
@@ -43,7 +43,7 @@
       border-radius: 34px;
       background:
         linear-gradient(180deg, rgba(6,6,7,.55), rgba(6,6,7,.78) 22%),
-        url("img/fondo.png") center / cover no-repeat,
+        url("../img/fondo.png") center / cover no-repeat,
         #060607;
       box-shadow:
         0 30px 90px rgba(0,0,0,.75),
