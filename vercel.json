@@ -16,6 +16,7 @@
     { "source": "/nfc", "destination": "/nfc.html" },
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/admin-productos", "destination": "/admin-productos.html" },
-    { "source": "/producto", "destination": "/producto-detalle.html" }
+    { "source": "/producto", "destination": "/producto-detalle.html" },
+    { "source": "/NFC-PRUEBA-AUTOMOTRIX", "destination": "/NFC-PRUEBA-AUTOMOTRIX/index.html" }
   ]
 }
